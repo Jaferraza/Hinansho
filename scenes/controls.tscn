@@ -24,7 +24,7 @@ text = "PLAYER 1:  A / D move,  W jump,  S crouch,  F attack,  G special
 
 PLAYER 2:  Left / Right move,  Up jump,  Down crouch,  Period (.) attack,  Slash (/) special
 
-Esc during a fight returns to map selection."
+Special: once per match, only while below 25% health or during a bounce back.\n\nBounce back: the first time your health drops below 25% you heal 30 HP and deal 1.5x damage for 8 seconds.\n\nEsc during a fight returns to map selection."
 autowrap_mode = 3
 
 [node name="Back" type="Button" parent="."]

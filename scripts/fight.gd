@@ -4,8 +4,13 @@ extends Node2D
 var _over := false
 
 func _ready() -> void:
-	for fighter in get_tree().get_nodes_in_group("fighters"):
+	var fighters := get_tree().get_nodes_in_group("fighters")
+	fighters.sort_custom(func(a, b): return a.player_id < b.player_id)
+	for fighter in fighters:
 		fighter.died.connect(_on_fighter_died.bind(fighter))
+	var hud = load("res://scripts/hud.gd").new()
+	add_child(hud)
+	hud.setup(fighters)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
