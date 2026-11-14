@@ -6,6 +6,9 @@ const BAR_W := 420.0
 const BAR_H := 28.0
 const MARGIN := 20.0
 const THRESHOLD := 0.25
+const PLAYER_NAMES := {1: "PLAYER ONE", 2: "PLAYER TWO"}
+# The demo brush font has blank digits, so it is used for letters only; HP numbers use the default font.
+const BRUSH_FONT := preload("res://Sukajan Brush Demo.otf")
 
 const FILL_NORMAL := Color(0.75, 0.1, 0.15)
 const FILL_BOOST := Color(1.0, 0.5, 0.1)
@@ -25,15 +28,15 @@ func _build_panel(fighter) -> Dictionary:
 	var align := HORIZONTAL_ALIGNMENT_LEFT if left else HORIZONTAL_ALIGNMENT_RIGHT
 
 	var root := Control.new()
-	root.size = Vector2(BAR_W, 130)
+	root.size = Vector2(BAR_W, 170)
 	root.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(root)
 
-	var name_label := _label(root, "PLAYER %d" % fighter.player_id, 22, Vector2(0, 0), BAR_W, align)
+	var name_label := _label(root, PLAYER_NAMES[fighter.player_id], 34, Vector2(0, 0), BAR_W, align, true)
 	name_label.add_theme_color_override("font_color", Color.WHITE)
 
 	var bar := ProgressBar.new()
-	bar.position = Vector2(0, 28)
+	bar.position = Vector2(0, 42)
 	bar.size = Vector2(BAR_W, BAR_H)
 	bar.show_percentage = false
 	bar.step = 1.0
@@ -61,12 +64,12 @@ func _build_panel(fighter) -> Dictionary:
 	var tick := ColorRect.new()
 	tick.color = SPECIAL_ON
 	tick.size = Vector2(3, BAR_H + 8)
-	tick.position = Vector2((BAR_W * (1.0 - THRESHOLD) if left else BAR_W * THRESHOLD) - 1.5, 24)
+	tick.position = Vector2((BAR_W * (1.0 - THRESHOLD) if left else BAR_W * THRESHOLD) - 1.5, 38)
 	tick.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	root.add_child(tick)
 
-	var special_label := _label(root, "SPECIAL", 18, Vector2(0, 28 + BAR_H + 4), BAR_W, align)
-	var banner := _label(root, "BOUNCE BACK!", 30, Vector2(0, 28 + BAR_H + 28), BAR_W, align)
+	var special_label := _label(root, "SPECIAL", 28, Vector2(0, 42 + BAR_H + 4), BAR_W, align, true)
+	var banner := _label(root, "BOUNCE BACK!", 46, Vector2(0, 42 + BAR_H + 40), BAR_W, align, true)
 	banner.add_theme_color_override("font_color", FILL_BOOST)
 	banner.add_theme_color_override("font_outline_color", Color.BLACK)
 	banner.add_theme_constant_override("outline_size", 6)
@@ -76,13 +79,15 @@ func _build_panel(fighter) -> Dictionary:
 			"hp": hp_label, "special": special_label, "banner": banner}
 
 
-func _label(parent: Node, text: String, font_size: int, pos: Vector2, width: float, align: HorizontalAlignment) -> Label:
+func _label(parent: Node, text: String, font_size: int, pos: Vector2, width: float, align: HorizontalAlignment, brush: bool = false) -> Label:
 	var label := Label.new()
 	label.text = text
 	label.position = pos
 	label.size = Vector2(width, font_size + 8)
 	label.horizontal_alignment = align
 	label.add_theme_font_size_override("font_size", font_size)
+	if brush:
+		label.add_theme_font_override("font", BRUSH_FONT)
 	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	parent.add_child(label)
 	return label

@@ -22,8 +22,9 @@ func _on_fighter_died(dead: Node) -> void:
 	_over = true
 	var layer := CanvasLayer.new()
 	var label := Label.new()
-	label.text = "PLAYER %d WINS" % (3 - dead.player_id)
-	label.add_theme_font_size_override("font_size", 64)
+	label.text = "PLAYER %s WINS" % ("ONE" if dead.player_id == 2 else "TWO")
+	label.add_theme_font_override("font", load("res://Sukajan Brush Demo.otf"))
+	label.add_theme_font_size_override("font_size", 120)
 	layer.add_child(label)
 	add_child(layer)
 	label.set_anchors_and_offsets_preset(Control.PRESET_CENTER)

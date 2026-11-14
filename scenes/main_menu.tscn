@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://b8bkd5cs2qhpc" path="res://assets/5814805a7fc30352b2852a1d98f8aec2.jpg" id="2_8ln24"]
 [ext_resource type="FontFile" uid="uid://bdpouu4tdtvd5" path="res://Sukajan Brush Demo.otf" id="2_fu7sn"]
 [ext_resource type="Texture2D" uid="uid://fi7q0tccxp8w" path="res://assets/button_red.png" id="5_glbon"]
+[ext_resource type="Script" path="res://scripts/quit_button.gd" id="6_quit"]
 
 [node name="MAIN MENU" type="Node2D" unique_id=1528757509]
 position = Vector2(0, 4)
@@ -80,6 +81,16 @@ theme_override_colors/font_color = Color(0.012617188, 0.012617188, 0.012617188, 
 theme_override_fonts/font = ExtResource("2_fu7sn")
 theme_override_font_sizes/font_size = 180
 text = "Start"
+
+[node name="Quit" type="Button" parent="."]
+offset_left = 700.0
+offset_top = 470.0
+offset_right = 1080.0
+offset_bottom = 610.0
+theme_override_fonts/font = ExtResource("2_fu7sn")
+theme_override_font_sizes/font_size = 100
+text = "Quit"
+script = ExtResource("6_quit")
 
 [connection signal="pressed" from="Button2" to="Button2" method="_on_pressed"]
 [connection signal="pressed" from="TextureRect/start" to="Button2" method="_on_button_pressed"]
