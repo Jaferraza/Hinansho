@@ -19,7 +19,7 @@ offset_left = 37.0
 offset_top = 291.0
 offset_right = 1077.0
 offset_bottom = 661.0
-theme_override_font_sizes/font_size = 26
+theme_override_font_sizes/font_size = 20
 text = "Buttons by Kennedy Assets
 Rogue (player) sprites by belial the hedgehog
 Heitatchi (player) sprites from Pinterest
@@ -31,7 +31,7 @@ offset_left = 34.0
 offset_top = 158.0
 offset_right = 1074.0
 offset_bottom = 528.0
-theme_override_font_sizes/font_size = 26
+theme_override_font_sizes/font_size = 40
 text = "Credits to Jafer Raza, Ibrahim Haroon 
 Honorable mention: Umer Arif, Mr. Claude"
 autowrap_mode = 3

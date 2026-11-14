@@ -1,16 +1,44 @@
 [gd_scene format=3 uid="uid://iqqesaeil4c0"]
 
-[ext_resource type="Texture2D" path="res://assets/rogue_sheet.png" id="1_sheet"]
-[ext_resource type="Script" path="res://scripts/rogue.gd" id="2_rogue"]
+[ext_resource type="Texture2D" uid="uid://cbs2kaph14ow3" path="res://assets/rogue_sheet.png" id="1_sheet"]
+[ext_resource type="Script" uid="uid://ddlnf2vq4m65a" path="res://scripts/rogue.gd" id="2_rogue"]
 [ext_resource type="Script" uid="uid://cv3v48cs8ldg3" path="res://scripts/attack_area2.gd" id="3_hit"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2"]
+atlas = ExtResource("1_sheet")
+region = Rect2(104, 0, 104, 104)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3"]
+atlas = ExtResource("1_sheet")
+region = Rect2(1040, 0, 104, 104)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_30"]
+atlas = ExtResource("1_sheet")
+region = Rect2(936, 0, 104, 104)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_26"]
+atlas = ExtResource("1_sheet")
+region = Rect2(1768, 0, 104, 104)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_27"]
+atlas = ExtResource("1_sheet")
+region = Rect2(1872, 0, 104, 104)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_28"]
+atlas = ExtResource("1_sheet")
+region = Rect2(1976, 0, 104, 104)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_29"]
+atlas = ExtResource("1_sheet")
+region = Rect2(2080, 0, 104, 104)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1"]
 atlas = ExtResource("1_sheet")
 region = Rect2(0, 0, 104, 104)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_2"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_6"]
 atlas = ExtResource("1_sheet")
-region = Rect2(104, 0, 104, 104)
+region = Rect2(832, 0, 104, 104)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7"]
 atlas = ExtResource("1_sheet")
@@ -36,18 +64,6 @@ region = Rect2(624, 0, 104, 104)
 atlas = ExtResource("1_sheet")
 region = Rect2(728, 0, 104, 104)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_6"]
-atlas = ExtResource("1_sheet")
-region = Rect2(832, 0, 104, 104)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_30"]
-atlas = ExtResource("1_sheet")
-region = Rect2(936, 0, 104, 104)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3"]
-atlas = ExtResource("1_sheet")
-region = Rect2(1040, 0, 104, 104)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_21"]
 atlas = ExtResource("1_sheet")
 region = Rect2(1144, 0, 104, 104)
@@ -72,24 +88,64 @@ region = Rect2(1560, 0, 104, 104)
 atlas = ExtResource("1_sheet")
 region = Rect2(1664, 0, 104, 104)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_26"]
-atlas = ExtResource("1_sheet")
-region = Rect2(1768, 0, 104, 104)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_27"]
-atlas = ExtResource("1_sheet")
-region = Rect2(1872, 0, 104, 104)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_28"]
-atlas = ExtResource("1_sheet")
-region = Rect2(1976, 0, 104, 104)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_29"]
-atlas = ExtResource("1_sheet")
-region = Rect2(2080, 0, 104, 104)
-
 [sub_resource type="SpriteFrames" id="SpriteFrames_rogue"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2")
+}],
+"loop": 0,
+"name": &"attack",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_30")
+}],
+"loop": 1,
+"name": &"crouch",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_26")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_30")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_26")
+}],
+"loop": 0,
+"name": &"damaged",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_26")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_27")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_28")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_29")
+}],
+"loop": 0,
+"name": &"death",
+"speed": 6.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_1")
@@ -97,8 +153,16 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_2")
 }],
-"loop": true,
+"loop": 1,
 "name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6")
+}],
+"loop": 1,
+"name": &"jump",
 "speed": 5.0
 }, {
 "frames": [{
@@ -120,42 +184,9 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_12")
 }],
-"loop": true,
+"loop": 1,
 "name": &"running",
 "speed": 16.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_6")
-}],
-"loop": true,
-"name": &"jump",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_30")
-}],
-"loop": true,
-"name": &"crouch",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_2")
-}],
-"loop": false,
-"name": &"attack",
-"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -176,44 +207,10 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_U")
 }],
-"loop": false,
+"loop": 0,
 "name": &"special",
 "speed": 7.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_26")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_30")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_26")
-}],
-"loop": false,
-"name": &"damaged",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_26")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_27")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_28")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_29")
-}],
-"loop": false,
-"name": &"death",
-"speed": 6.0
 }]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
-size = Vector2(40, 96)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jab"]
 size = Vector2(64, 60)
@@ -221,35 +218,38 @@ size = Vector2(64, 60)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_special"]
 size = Vector2(100, 120)
 
-[node name="PLAYER" type="CharacterBody2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
+size = Vector2(40, 125)
+
+[node name="PLAYER" type="CharacterBody2D" unique_id=1129603542]
 script = ExtResource("2_rogue")
+damaged_anim_speed = 9.0
 special_anim_speed = 7.0
 special_hit_frame = 4
-damaged_anim_speed = 9.0
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=183881683]
 position = Vector2(0, -22.2)
 scale = Vector2(1.1, 1.1)
 sprite_frames = SubResource("SpriteFrames_rogue")
 animation = &"idle"
 autoplay = "idle"
 
-[node name="AttackArea" type="Area2D" parent="."]
+[node name="AttackArea" type="Area2D" parent="." unique_id=1210598588]
 position = Vector2(0, -1)
 script = ExtResource("3_hit")
 
-[node name="HitShape" type="CollisionShape2D" parent="AttackArea"]
+[node name="HitShape" type="CollisionShape2D" parent="AttackArea" unique_id=1298185355]
 position = Vector2(50, -25)
 shape = SubResource("RectangleShape2D_jab")
 
-[node name="SpecialArea" type="Area2D" parent="."]
+[node name="SpecialArea" type="Area2D" parent="." unique_id=837446052]
 position = Vector2(0, -1)
 script = ExtResource("3_hit")
 
-[node name="HitShape" type="CollisionShape2D" parent="SpecialArea"]
+[node name="HitShape" type="CollisionShape2D" parent="SpecialArea" unique_id=1081123431]
 position = Vector2(65, -30)
 shape = SubResource("RectangleShape2D_special")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -13)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1926138489]
+position = Vector2(0, -27.5)
 shape = SubResource("RectangleShape2D_body")

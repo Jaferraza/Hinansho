@@ -14,6 +14,7 @@ const GRAVITY = 980.0
 const HIT_INVULN = 0.6          # brief invulnerability after a hit, so one player can't stun-lock the other
 const HIT_STUN = 0.35           # how long a hit freezes the victim (matches the hit animation)
 const MAX_ACTION_TIME = 1.5     # safety: an attack can never last longer than this
+const INPUT_BUFFER = 0.25       # an attack/special press is remembered this long if you are busy
 const ATTACK_DAMAGE = 10
 const SPECIAL_DAMAGE = 25
 
@@ -48,6 +49,8 @@ var boost_time_left: float = 0.0
 var invuln_time_left: float = 0.0
 var stun_time_left: float = 0.0
 var action_time_left: float = 0.0
+var buffered_action: String = ""
+var buffer_time_left: float = 0.0
 
 var is_attacking: bool = false
 var is_crouching: bool = false
@@ -141,6 +144,15 @@ func _physics_process(delta: float) -> void:
 		move_and_slide()
 		return
 
+	# Remember an attack/special press for a moment, so it still fires when the player becomes free.
+	buffer_time_left = maxf(buffer_time_left - delta, 0.0)
+	if Input.is_action_just_pressed(_a("attack")):
+		buffered_action = "attack"
+		buffer_time_left = INPUT_BUFFER
+	elif Input.is_action_just_pressed(_a("special")):
+		buffered_action = "special"
+		buffer_time_left = INPUT_BUFFER
+
 	if is_attacking or is_special_attacking or is_damaged:
 		velocity.x = 0
 	else:
@@ -149,11 +161,14 @@ func _physics_process(delta: float) -> void:
 		if Input.is_action_just_pressed(_a("jump")) and is_on_floor() and not is_crouching:
 			velocity.y = JUMP_VELOCITY
 
-		if Input.is_action_just_pressed(_a("attack")):
-			_start_attack(false)
-		elif Input.is_action_just_pressed(_a("special")):
-			# Locked / already used / in the air: nothing happens.
-			if is_on_floor() and can_use_special():
+		if buffer_time_left > 0.0 and buffered_action != "":
+			var wanted := buffered_action
+			buffered_action = ""
+			buffer_time_left = 0.0
+			if wanted == "attack":
+				_start_attack(false)
+			elif is_on_floor() and can_use_special():
+				# Locked / already used / in the air: nothing happens.
 				special_used = true
 				_start_attack(true)
 
@@ -219,16 +234,21 @@ func take_damage(amount: int) -> void:
 	invuln_time_left = HIT_INVULN
 	health = maxi(health - amount, 0)
 	health_changed.emit(health, max_health)
-	_end_attack()   # being hit cancels whatever move was in progress
 	if health == 0:
+		_end_attack()
 		is_dead = true
 		boost_time_left = 0.0
 		_play("death" if sprite.sprite_frames.has_animation("death") else "damaged", true)
 		died.emit()
 		return
-	is_damaged = true
-	stun_time_left = HIT_STUN
-	_play("damaged", true)
+	# The special has super armor: being hit costs health but does not interrupt it.
+	# Any other move is cancelled by a hit.
+	if not is_special_attacking:
+		_end_attack()
+		buffered_action = ""
+		is_damaged = true
+		stun_time_left = HIT_STUN
+		_play("damaged", true)
 	if not bounce_used and float(health) < max_health * BOUNCE_THRESHOLD:
 		_bounce_back()
 
