@@ -9,8 +9,11 @@ signal bounced_back
 signal died
 
 const SPEED = 300.0
-const JUMP_VELOCITY = -400.0
+const JUMP_VELOCITY = -490.0   # apex ~120px: high enough to clear the other player's ~100px body
 const GRAVITY = 980.0
+const HIT_INVULN = 0.6          # brief invulnerability after a hit, so one player can't stun-lock the other
+const HIT_STUN = 0.35           # how long a hit freezes the victim (matches the hit animation)
+const MAX_ACTION_TIME = 1.5     # safety: an attack can never last longer than this
 const ATTACK_DAMAGE = 10
 const SPECIAL_DAMAGE = 25
 
@@ -31,7 +34,7 @@ const CONTROLS = {
 @export var max_health: int = 100
 
 # Per-character tuning (defaults are Heitachi's).
-@export var damaged_anim_speed: float = 12.0   # hit-stun length: frames / speed seconds
+@export var damaged_anim_speed: float = 24.0   # hit-stun length: frames / speed seconds (~0.33s)
 @export var special_anim_speed: float = 8.0     # special length: frames / speed seconds
 @export var special_hit_frame: int = 5          # special hitbox is only live from this frame on
 
@@ -42,6 +45,9 @@ var facing: int = 1
 var bounce_used: bool = false
 var special_used: bool = false
 var boost_time_left: float = 0.0
+var invuln_time_left: float = 0.0
+var stun_time_left: float = 0.0
+var action_time_left: float = 0.0
 
 var is_attacking: bool = false
 var is_crouching: bool = false
@@ -58,10 +64,10 @@ func _ready() -> void:
 	add_to_group("fighters")
 	health = max_health
 
-	# Players live on layer 2 and only collide with the world (layer 1), so they can't
-	# push each other around. The hitboxes only look for layer 2 (the other player).
+	# Players live on layer 2 and collide with the world (layer 1) and with each other (layer 2),
+	# so you have to jump over the other player. The hitboxes only look for layer 2.
 	collision_layer = 2
-	collision_mask = 1
+	collision_mask = 3
 	for area in [attack_area, special_area]:
 		area.collision_layer = 0
 		area.collision_mask = 2
@@ -115,6 +121,16 @@ func can_use_special() -> bool:
 func _physics_process(delta: float) -> void:
 	if boost_time_left > 0.0:
 		boost_time_left = maxf(boost_time_left - delta, 0.0)
+	invuln_time_left = maxf(invuln_time_left - delta, 0.0)
+	# Timers guarantee a player is never stuck stunned or mid-attack, even if an animation signal is missed.
+	if stun_time_left > 0.0:
+		stun_time_left -= delta
+		if stun_time_left <= 0.0 and not is_dead:
+			is_damaged = false
+	if action_time_left > 0.0:
+		action_time_left -= delta
+		if action_time_left <= 0.0 and (is_attacking or is_special_attacking):
+			_end_attack()
 	_update_tint()
 
 	if not is_on_floor():
@@ -163,17 +179,20 @@ func _apply_facing() -> void:
 
 
 func _update_tint() -> void:
+	var color := Color.WHITE
 	if is_boosted():
 		var k := 0.5 + 0.5 * sin(Time.get_ticks_msec() / 1000.0 * 10.0)
-		sprite.modulate = Color(1.0, 1.0 - 0.55 * k, 1.0 - 0.55 * k)   # pulsing red
-	else:
-		sprite.modulate = Color.WHITE
+		color = Color(1.0, 1.0 - 0.55 * k, 1.0 - 0.55 * k)   # pulsing red
+	if invuln_time_left > 0.0 and not is_dead and int(Time.get_ticks_msec() / 70.0) % 2 == 0:
+		color.a = 0.5   # blink while invulnerable after a hit
+	sprite.modulate = color
 
 
 # --- attacking -------------------------------------------------------------
 
 func _start_attack(special: bool) -> void:
 	is_crouching = false
+	action_time_left = MAX_ACTION_TIME
 	var base := SPECIAL_DAMAGE if special else ATTACK_DAMAGE
 	current_damage = int(base * (BOUNCE_DAMAGE_MULT if is_boosted() else 1.0))
 	if special:
@@ -195,8 +214,9 @@ func _end_attack() -> void:
 # --- health ----------------------------------------------------------------
 
 func take_damage(amount: int) -> void:
-	if is_dead:
+	if is_dead or invuln_time_left > 0.0:
 		return
+	invuln_time_left = HIT_INVULN
 	health = maxi(health - amount, 0)
 	health_changed.emit(health, max_health)
 	_end_attack()   # being hit cancels whatever move was in progress
@@ -207,6 +227,7 @@ func take_damage(amount: int) -> void:
 		died.emit()
 		return
 	is_damaged = true
+	stun_time_left = HIT_STUN
 	_play("damaged", true)
 	if not bounce_used and float(health) < max_health * BOUNCE_THRESHOLD:
 		_bounce_back()

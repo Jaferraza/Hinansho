@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://b8bkd5cs2qhpc" path="res://assets/5814805a7fc30352b2852a1d98f8aec2.jpg" id="2_8ln24"]
 [ext_resource type="FontFile" uid="uid://bdpouu4tdtvd5" path="res://Sukajan Brush Demo.otf" id="2_fu7sn"]
 [ext_resource type="Texture2D" uid="uid://fi7q0tccxp8w" path="res://assets/button_red.png" id="5_glbon"]
-[ext_resource type="Script" path="res://scripts/quit_button.gd" id="6_quit"]
+[ext_resource type="Script" uid="uid://dcp270igdt61j" path="res://scripts/quit_button.gd" id="6_quit"]
 
 [node name="MAIN MENU" type="Node2D" unique_id=1528757509]
 position = Vector2(0, 4)
@@ -57,8 +57,8 @@ theme_override_font_sizes/font_size = 100
 text = "Controls"
 
 [node name="ButtonRed" type="Sprite2D" parent="Label" unique_id=776650401]
-position = Vector2(233, -232)
-scale = Vector2(6.6562505, 5.2083335)
+position = Vector2(238.49998, -238)
+scale = Vector2(8.364583, 6.541667)
 texture = ExtResource("5_glbon")
 
 [node name="Label2" type="Label" parent="." unique_id=723847595]
@@ -73,23 +73,33 @@ text = "Hinansho"
 
 [node name="Label3" type="Label" parent="." unique_id=1536653158]
 texture_filter = 1
-offset_left = -302.0
-offset_top = -29.0
-offset_right = 349.0
-offset_bottom = 271.0
+offset_left = -293.0
+offset_top = -30.0
+offset_right = 345.0
+offset_bottom = 245.0
 theme_override_colors/font_color = Color(0.012617188, 0.012617188, 0.012617188, 1)
 theme_override_fonts/font = ExtResource("2_fu7sn")
-theme_override_font_sizes/font_size = 180
+theme_override_font_sizes/font_size = 190
 text = "Start"
 
-[node name="Quit" type="Button" parent="."]
-offset_left = 700.0
-offset_top = 470.0
-offset_right = 1080.0
-offset_bottom = 610.0
+[node name="Quit" type="Button" parent="." unique_id=891592032]
+offset_left = 721.0
+offset_top = 454.0
+offset_right = 1101.0
+offset_bottom = 613.0
 theme_override_fonts/font = ExtResource("2_fu7sn")
 theme_override_font_sizes/font_size = 100
 text = "Quit"
+script = ExtResource("6_quit")
+
+[node name="Quit2" type="Button" parent="." unique_id=2044889750]
+offset_left = -1094.0
+offset_top = 453.0
+offset_right = -638.0
+offset_bottom = 612.0
+theme_override_fonts/font = ExtResource("2_fu7sn")
+theme_override_font_sizes/font_size = 100
+text = "Credits"
 script = ExtResource("6_quit")
 
 [connection signal="pressed" from="Button2" to="Button2" method="_on_pressed"]

@@ -1,20 +1,20 @@
 [gd_scene format=3 uid="uid://b0e4jridxf2lh"]
 
 [ext_resource type="FontFile" uid="uid://bdpouu4tdtvd5" path="res://Sukajan Brush Demo.otf" id="1_font"]
-[ext_resource type="Script" path="res://scripts/back_button.gd" id="2_back"]
+[ext_resource type="Script" uid="uid://cf8ug380hlwgf" path="res://scripts/back_button.gd" id="2_back"]
 
-[node name="Controls" type="Node2D"]
+[node name="Controls" type="Node2D" unique_id=1086003611]
 
-[node name="Title" type="Label" parent="."]
-offset_left = 60.0
+[node name="Title" type="Label" parent="." unique_id=1913959865]
+offset_left = 59.0
 offset_top = 20.0
-offset_right = 700.0
-offset_bottom = 150.0
+offset_right = 699.0
+offset_bottom = 155.0
 theme_override_fonts/font = ExtResource("1_font")
 theme_override_font_sizes/font_size = 90
 text = "Controls"
 
-[node name="Body" type="Label" parent="."]
+[node name="Body" type="Label" parent="." unique_id=900728950]
 offset_left = 60.0
 offset_top = 150.0
 offset_right = 1100.0
@@ -24,14 +24,18 @@ text = "PLAYER 1:  A / D move,  W jump,  S crouch,  F attack,  G special
 
 PLAYER 2:  Left / Right move,  Up jump,  Down crouch,  Period (.) attack,  Slash (/) special
 
-Special: once per match, only while below 25% health or during a bounce back.\n\nBounce back: the first time your health drops below 25% you heal 30 HP and deal 1.5x damage for 8 seconds.\n\nEsc during a fight returns to map selection."
+Special: once per match, only while below 25% health or during a bounce back.
+
+Bounce back: the first time your health drops below 25% you heal 30 HP and deal 1.5x damage for 8 seconds.
+
+Esc during a fight returns to map selection."
 autowrap_mode = 3
 
-[node name="Back" type="Button" parent="."]
-offset_left = 60.0
-offset_top = 540.0
-offset_right = 200.0
-offset_bottom = 600.0
+[node name="Back" type="Button" parent="." unique_id=1830770489]
+offset_left = 957.0
+offset_top = 557.0
+offset_right = 1097.0
+offset_bottom = 617.0
 theme_override_font_sizes/font_size = 28
 text = "Back"
 script = ExtResource("2_back")
