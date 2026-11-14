@@ -219,7 +219,7 @@ size = Vector2(64, 60)
 size = Vector2(100, 120)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
-size = Vector2(40, 125)
+size = Vector2(40, 182)
 
 [node name="PLAYER" type="CharacterBody2D" unique_id=1129603542]
 script = ExtResource("2_rogue")
@@ -251,5 +251,5 @@ position = Vector2(65, -30)
 shape = SubResource("RectangleShape2D_special")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1926138489]
-position = Vector2(0, -27.5)
+position = Vector2(0, -56)
 shape = SubResource("RectangleShape2D_body")
