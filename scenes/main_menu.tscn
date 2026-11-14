@@ -1,0 +1,85 @@
+[gd_scene format=3 uid="uid://dytgbfnbbdv2k"]
+
+[ext_resource type="Script" uid="uid://dookljbb4yix1" path="res://scripts/controls.gd" id="1_8ln24"]
+[ext_resource type="Texture2D" uid="uid://dnsdeoqgbkyiq" path="res://assets/button_rectangle_depth_gloss.png" id="1_ekxnf"]
+[ext_resource type="Texture2D" uid="uid://b8bkd5cs2qhpc" path="res://assets/5814805a7fc30352b2852a1d98f8aec2.jpg" id="2_8ln24"]
+[ext_resource type="FontFile" uid="uid://bdpouu4tdtvd5" path="res://Sukajan Brush Demo.otf" id="2_fu7sn"]
+[ext_resource type="Texture2D" uid="uid://fi7q0tccxp8w" path="res://assets/button_red.png" id="5_glbon"]
+
+[node name="MAIN MENU" type="Node2D" unique_id=1528757509]
+position = Vector2(0, 4)
+
+[node name="Button2" type="Button" parent="." unique_id=1680276514]
+show_behind_parent = true
+offset_left = -375.0
+offset_top = 276.0
+offset_right = 480.0
+offset_bottom = 527.0
+script = ExtResource("1_8ln24")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1752890032]
+offset_left = -432.0
+offset_top = -132.0
+offset_right = 412.0
+offset_bottom = 129.0
+texture = ExtResource("1_ekxnf")
+
+[node name="start" type="Button" parent="TextureRect" unique_id=1419342915]
+layout_mode = 0
+offset_left = 128.0
+offset_top = 118.0
+offset_right = 743.0
+offset_bottom = 351.0
+
+[node name="5814805a7Fc30352b2852a1d98f8Aec2" type="Sprite2D" parent="TextureRect" unique_id=901090205]
+position = Vector2(452.00006, 133.49998)
+scale = Vector2(1.913261, 1.9479167)
+texture = ExtResource("2_8ln24")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=683976202]
+position = Vector2(16, 2)
+zoom = Vector2(0.5, 0.5)
+
+[node name="ButtonRed" type="Sprite2D" parent="." unique_id=2137951253]
+position = Vector2(5, 401)
+scale = Vector2(6.6562505, 5.2083335)
+texture = ExtResource("5_glbon")
+
+[node name="Label" type="Label" parent="." unique_id=814611133]
+offset_left = -234.0
+offset_top = 325.0
+offset_right = 254.0
+offset_bottom = 476.0
+theme_override_colors/font_color = Color(0.012617188, 0.012617188, 0.012617188, 1)
+theme_override_fonts/font = ExtResource("2_fu7sn")
+theme_override_font_sizes/font_size = 100
+text = "Controls"
+
+[node name="ButtonRed" type="Sprite2D" parent="Label" unique_id=776650401]
+position = Vector2(233, -232)
+scale = Vector2(6.6562505, 5.2083335)
+texture = ExtResource("5_glbon")
+
+[node name="Label2" type="Label" parent="." unique_id=723847595]
+offset_left = -693.0
+offset_top = -468.0
+offset_right = 732.0
+offset_bottom = -19.0
+theme_override_colors/font_color = Color(1, 0, 0.24705882, 1)
+theme_override_fonts/font = ExtResource("2_fu7sn")
+theme_override_font_sizes/font_size = 300
+text = "Hinansho"
+
+[node name="Label3" type="Label" parent="." unique_id=1536653158]
+texture_filter = 1
+offset_left = -302.0
+offset_top = -29.0
+offset_right = 349.0
+offset_bottom = 271.0
+theme_override_colors/font_color = Color(0.012617188, 0.012617188, 0.012617188, 1)
+theme_override_fonts/font = ExtResource("2_fu7sn")
+theme_override_font_sizes/font_size = 180
+text = "Start"
+
+[connection signal="pressed" from="Button2" to="Button2" method="_on_pressed"]
+[connection signal="pressed" from="TextureRect/start" to="Button2" method="_on_button_pressed"]

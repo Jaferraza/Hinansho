@@ -2,7 +2,7 @@
 
 [ext_resource type="VideoStream" uid="uid://cwkxx5e6nu16a" path="res://assets/download.ogv" id="1_esgco"]
 [ext_resource type="FontFile" uid="uid://bdpouu4tdtvd5" path="res://Sukajan Brush Demo.otf" id="4_1rqg2"]
-[ext_resource type="Script" path="res://3rdmapssb.gd" id="5_22ltf"]
+[ext_resource type="Script" uid="uid://brm2kg7ibqv7u" path="res://scripts/3rdmapssb.gd" id="5_22ltf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_esgco"]
 size = Vector2(651, 32)

@@ -7,4 +7,13 @@ damage/health
 special move
 
 
-progress: 1 map 1 player
+progress: 3 map 2 player, main menu
+
+need to: make tutorial/controls scene
+code health, damage, moves
+
+
+checklist:
+1stmap = dun tianjante
+QingMAP = dun
+map selection dun
