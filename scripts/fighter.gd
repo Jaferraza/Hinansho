@@ -1,22 +1,23 @@
-# Shared fighter logic (movement, attacks, health, bounce back, special).
-# Characters are scenes that use a thin script extending this one and set the
-# tuning exports below, plus provide these animations on their AnimatedSprite2D:
-# idle, running, jump, crouch, attack, special, damaged (and optionally death).
+#
 extends CharacterBody2D
 
 signal health_changed(health: int, max_health: int)
 signal bounced_back
 signal died
+signal hit_taken(world_pos: Vector2, amount: int, special: bool)   # fight.gd spawns the hit effects
 
 const SPEED = 300.0
-const JUMP_VELOCITY = -490.0   # apex ~120px: high enough to clear the other player's ~100px body
+const JUMP_VELOCITY = -490.0   
 const GRAVITY = 980.0
-const HIT_INVULN = 0.6          # brief invulnerability after a hit, so one player can't stun-lock the other
-const HIT_STUN = 0.35           # how long a hit freezes the victim (matches the hit animation)
-const MAX_ACTION_TIME = 1.5     # safety: an attack can never last longer than this
-const INPUT_BUFFER = 0.25       # an attack/special press is remembered this long if you are busy
+const HIT_INVULN = 0.6          
+const HIT_STUN = 0.35           
+const MAX_ACTION_TIME = 1.5     
+const INPUT_BUFFER = 0.25       
 const ATTACK_DAMAGE = 10
 const SPECIAL_DAMAGE = 25
+const KNOCKBACK = 230.0                      
+const SPECIAL_KNOCKBACK = Vector2(420.0, -300.0)   
+const KNOCKBACK_FRICTION = 900.0
 
 
 # Bounce back: the comeback mechanic.
@@ -57,6 +58,7 @@ var is_crouching: bool = false
 var is_damaged: bool = false
 var is_special_attacking: bool = false
 var is_dead: bool = false
+var controls_enabled: bool = true   # fight.gd turns this off during the round intro
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var attack_area: Area2D = $AttackArea
@@ -140,8 +142,14 @@ func _physics_process(delta: float) -> void:
 		velocity.y += GRAVITY * delta
 
 	if is_dead:
-		velocity.x = 0
+		velocity.x = move_toward(velocity.x, 0, KNOCKBACK_FRICTION * delta)
 		move_and_slide()
+		return
+
+	if not controls_enabled:
+		velocity.x = move_toward(velocity.x, 0, SPEED)
+		move_and_slide()
+		_update_animation()
 		return
 
 	# Remember an attack/special press for a moment, so it still fires when the player becomes free.
@@ -153,7 +161,9 @@ func _physics_process(delta: float) -> void:
 		buffered_action = "special"
 		buffer_time_left = INPUT_BUFFER
 
-	if is_attacking or is_special_attacking or is_damaged:
+	if is_damaged:
+		velocity.x = move_toward(velocity.x, 0, KNOCKBACK_FRICTION * delta)   # knockback slides to a stop
+	elif is_attacking or is_special_attacking:
 		velocity.x = 0
 	else:
 		is_crouching = Input.is_action_pressed(_a("crouch")) and is_on_floor()
@@ -207,6 +217,7 @@ func _update_tint() -> void:
 
 func _start_attack(special: bool) -> void:
 	is_crouching = false
+	velocity.x = 0
 	action_time_left = MAX_ACTION_TIME
 	var base := SPECIAL_DAMAGE if special else ATTACK_DAMAGE
 	current_damage = int(base * (BOUNCE_DAMAGE_MULT if is_boosted() else 1.0))
@@ -228,12 +239,24 @@ func _end_attack() -> void:
 
 # --- health ----------------------------------------------------------------
 
-func take_damage(amount: int) -> void:
+func take_damage(amount: int, from: Node2D = null) -> void:
 	if is_dead or invuln_time_left > 0.0:
 		return
 	invuln_time_left = HIT_INVULN
 	health = maxi(health - amount, 0)
 	health_changed.emit(health, max_health)
+
+	# Knockback away from the attacker (or backwards if we don't know who hit us).
+	var special_hit: bool = from != null and from.get("is_special_attacking") == true
+	var away := -float(facing)
+	if from != null and not is_equal_approx(from.global_position.x, global_position.x):
+		away = signf(global_position.x - from.global_position.x)
+	if special_hit:
+		velocity = Vector2(away * SPECIAL_KNOCKBACK.x, SPECIAL_KNOCKBACK.y)
+	elif not is_special_attacking:
+		velocity.x = away * KNOCKBACK
+	hit_taken.emit(global_position + Vector2(-away * 22.0, -45.0), amount, special_hit)
+
 	if health == 0:
 		_end_attack()
 		is_dead = true
