@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://b00wn4s05b22l"]
 
 [ext_resource type="VideoStream" uid="uid://c27kuu02fmirg" path="res://assets/Last-Blade-1-Kagami_s-Stage-_1__1.ogv" id="1_8ytog"]
+[ext_resource type="Script" path="res://scripts/fight.gd" id="fight_script"]
+[ext_resource type="PackedScene" uid="uid://cysf73s4cqmj8" path="res://scenes/heitachi.tscn" id="player_scene"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8ytog"]
 size = Vector2(819, 96)
@@ -12,6 +14,7 @@ size = Vector2(41, 408)
 size = Vector2(69, 408)
 
 [node name="Node2D" type="Node2D" unique_id=2128166730]
+script = ExtResource("fight_script")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1889409336]
 position = Vector2(479, 284)
@@ -41,3 +44,11 @@ loop = true
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1075131182]
 position = Vector2(518, 219)
 zoom = Vector2(1.45, 2.06)
+
+[node name="Player1" parent="." instance=ExtResource("player_scene")]
+position = Vector2(300, 355)
+player_id = 1
+
+[node name="Player2" parent="." instance=ExtResource("player_scene")]
+position = Vector2(700, 355)
+player_id = 2

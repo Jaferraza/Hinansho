@@ -9,7 +9,6 @@
 [ext_resource type="Texture2D" uid="uid://cjbecqf8ew84y" path="res://assets/4444.png" id="3_m4rcp"]
 [ext_resource type="Texture2D" uid="uid://bx6urvbng55j8" path="res://assets/fbbeb8b2-f4ed-4251-870a-a9d0d3dbe1dd (2).png" id="4_cosi3"]
 [ext_resource type="Script" uid="uid://cv3v48cs8ldg3" path="res://scripts/attack_area2.gd" id="9_m55tn"]
-[ext_resource type="PackedScene" uid="uid://56axpp6ou6bl" path="res://scenes/healthbar.tscn" id="10_m55tn"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lu58k"]
 atlas = ExtResource("2_m4rcp")
@@ -273,10 +272,14 @@ animations = [{
 "speed": 3.0
 }]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_m55tn"]
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_m55tn"]
 size = Vector2(47.5, 101)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_special"]
+size = Vector2(120, 110)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hit"]
+size = Vector2(60, 70)
 
 [node name="PLAYER" type="CharacterBody2D"]
 position = Vector2(78, 157)
@@ -293,19 +296,19 @@ frame_progress = 1.0
 
 [node name="AttackArea" type="Area2D" parent="."]
 position = Vector2(0, -1)
-collision_layer = 7
-collision_mask = 7
 script = ExtResource("9_m55tn")
 
-[node name="HealthBarContainer" type="Node2D" parent="."]
+[node name="HitShape" type="CollisionShape2D" parent="AttackArea"]
+position = Vector2(45, -15)
+shape = SubResource("RectangleShape2D_hit")
 
-[node name="healthbar" parent="HealthBarContainer" instance=ExtResource("10_m55tn")]
-offset_left = -43.0
-offset_top = -47.0
-offset_right = 54.0
-offset_bottom = -37.0
-size_flags_horizontal = 0
-theme_override_styles/background = SubResource("StyleBoxEmpty_m55tn")
+[node name="SpecialArea" type="Area2D" parent="."]
+position = Vector2(0, -1)
+script = ExtResource("9_m55tn")
+
+[node name="HitShape" type="CollisionShape2D" parent="SpecialArea"]
+position = Vector2(90, -20)
+shape = SubResource("RectangleShape2D_special")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(3.75, -15.5)

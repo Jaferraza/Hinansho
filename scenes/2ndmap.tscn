@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://d1on1idckh2ry"]
 
 [ext_resource type="VideoStream" uid="uid://dvujy5l0qtl86" path="res://assets/download-_3_.ogv" id="1_h64oj"]
+[ext_resource type="Script" path="res://scripts/fight.gd" id="fight_script"]
+[ext_resource type="PackedScene" uid="uid://cysf73s4cqmj8" path="res://scenes/heitachi.tscn" id="player_scene"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h64oj"]
 size = Vector2(24, 285)
@@ -9,6 +11,7 @@ size = Vector2(24, 285)
 size = Vector2(665, 61)
 
 [node name="Node2D" type="Node2D" unique_id=1837634635]
+script = ExtResource("fight_script")
 
 [node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="." unique_id=804450797]
 offset_left = 1.0
@@ -36,3 +39,11 @@ shape = SubResource("RectangleShape2D_h64oj")
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D" unique_id=1976556129]
 position = Vector2(322.5, 279.5)
 shape = SubResource("RectangleShape2D_ly4kr")
+
+[node name="Player1" parent="." instance=ExtResource("player_scene")]
+position = Vector2(200, 212)
+player_id = 1
+
+[node name="Player2" parent="." instance=ExtResource("player_scene")]
+position = Vector2(440, 212)
+player_id = 2
