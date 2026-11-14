@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://dgvbu1e7y2ab1" path="res://assets/rogue.png" id="1_dlw1k"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_e01fp"]
+radius = 10.310888
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_b3c45"]
 atlas = ExtResource("1_dlw1k")
@@ -142,7 +143,7 @@ animations = [{
 [node name="CharacterBody2D" type="CharacterBody2D" unique_id=1737736781]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=479760188]
-scale = Vector2(2.427195, -8.42633)
+scale = Vector2(2.4329698, -8.553354)
 shape = SubResource("CircleShape2D_e01fp")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1047924744]
@@ -150,4 +151,4 @@ scale = Vector2(2.323202, 1.4895896)
 sprite_frames = SubResource("SpriteFrames_e01fp")
 animation = &"idle"
 autoplay = "idle"
-frame_progress = 0.50732785
+frame_progress = 0.16053228
