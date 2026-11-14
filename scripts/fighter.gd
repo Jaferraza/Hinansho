@@ -170,6 +170,7 @@ func _physics_process(delta: float) -> void:
 
 		if Input.is_action_just_pressed(_a("jump")) and is_on_floor() and not is_crouching:
 			velocity.y = JUMP_VELOCITY
+			Sfx.play("jump")
 
 		if buffer_time_left > 0.0 and buffered_action != "":
 			var wanted := buffered_action
@@ -193,7 +194,10 @@ func _physics_process(delta: float) -> void:
 			else:
 				velocity.x = move_toward(velocity.x, 0, SPEED)
 
+	var was_airborne := not is_on_floor()
 	move_and_slide()
+	if was_airborne and is_on_floor():
+		Sfx.play("land")
 	_update_animation()
 
 
@@ -223,10 +227,12 @@ func _start_attack(special: bool) -> void:
 	current_damage = int(base * (BOUNCE_DAMAGE_MULT if is_boosted() else 1.0))
 	if special:
 		is_special_attacking = true
+		Sfx.play("announce")
 		_play("special", true)   # its hitbox is switched on later, in _on_frame_changed
 	else:
 		is_attacking = true
 		_play("attack", true)
+		Sfx.play("swing")
 		attack_area.set_deferred("monitoring", true)
 
 
@@ -278,6 +284,7 @@ func take_damage(amount: int, from: Node2D = null) -> void:
 
 func _bounce_back() -> void:
 	bounce_used = true
+	Sfx.play("bounce", 0.0)
 	health = mini(health + BOUNCE_HEAL, max_health)
 	boost_time_left = BOUNCE_DURATION
 	health_changed.emit(health, max_health)

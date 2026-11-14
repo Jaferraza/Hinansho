@@ -32,7 +32,9 @@ func _ready() -> void:
 	add_child(hud)
 	hud.setup(fighters)
 
+	Sfx.play("announce", 0.0)
 	await _announce("ROUND ONE", 0.8, 130)
+	Sfx.play("announce", 0.0)
 	await _announce("FIGHT!", 0.5, 170, Color(1.0, 0.25, 0.2))
 	for fighter in fighters:
 		if is_instance_valid(fighter):
@@ -51,6 +53,7 @@ func _process(delta: float) -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
+		_over = true
 		Engine.time_scale = 1.0
 		Transition.change_scene("res://scenes/map_selection.tscn")
 
@@ -58,6 +61,7 @@ func _unhandled_input(event: InputEvent) -> void:
 # --- hit effects -------------------------------------------------------------
 
 func _on_hit_taken(pos: Vector2, amount: int, special: bool) -> void:
+	Sfx.play("special_hit" if special else "hit")
 	var spark := HIT_SPARK.new()
 	spark.big = special
 	spark.position = pos
@@ -139,6 +143,7 @@ func _on_fighter_died(dead: Node) -> void:
 		return
 	_over = true
 	_shake_strength = 22.0
+	Sfx.play("ko", 0.0)
 
 	# Slow-motion K.O. with a camera push-in.
 	Engine.time_scale = KO_SLOWMO
@@ -156,6 +161,7 @@ func _on_fighter_died(dead: Node) -> void:
 		var zoom_out := create_tween()
 		zoom_out.tween_property(_camera, "zoom", zoom_before, 0.4).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 
+	Sfx.play("win", 0.0)
 	var winner := _make_banner("PLAYER %s WINS" % ("ONE" if dead.player_id == 2 else "TWO"), 120, Color.WHITE)
 	winner.scale = Vector2(0.6, 0.6)
 	var tween := create_tween()
