@@ -4,3 +4,8 @@
 
 # Windows folder metadata
 desktop.ini
+
+# Web exports
+export/
+export-final/
+Hinansho*.*
