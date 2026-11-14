@@ -150,15 +150,15 @@ animations = [{
 "duration": 1.01,
 "texture": SubResource("AtlasTexture_bjia6")
 }],
-"loop": false,
+"loop": 0,
 "name": &"attack",
-"speed": 6.0
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_63twy")
 }],
-"loop": true,
+"loop": 1,
 "name": &"crouch",
 "speed": 2.0
 }, {
@@ -187,7 +187,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_6ky2h")
 }],
-"loop": true,
+"loop": 1,
 "name": &"damaged",
 "speed": 3.0
 }, {
@@ -204,9 +204,9 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_m4rcp")
 }],
-"loop": true,
+"loop": 1,
 "name": &"idle",
-"speed": 5.0
+"speed": 6.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -221,9 +221,9 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_a1fph")
 }],
-"loop": true,
+"loop": 1,
 "name": &"jump",
-"speed": 4.0
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -241,9 +241,9 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_15otc")
 }],
-"loop": true,
+"loop": 1,
 "name": &"running",
-"speed": 7.0
+"speed": 14.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -267,25 +267,25 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_p3yyl")
 }],
-"loop": true,
+"loop": 1,
 "name": &"special",
 "speed": 3.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_m55tn"]
-size = Vector2(47.5, 101)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hit"]
+size = Vector2(60, 70)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_special"]
 size = Vector2(120, 110)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_hit"]
-size = Vector2(60, 70)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m55tn"]
+size = Vector2(47.5, 133)
 
-[node name="PLAYER" type="CharacterBody2D"]
+[node name="PLAYER" type="CharacterBody2D" unique_id=1429203390]
 position = Vector2(78, 157)
 script = ExtResource("1_1qxi3")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=336491323]
 position = Vector2(-6, -1.999999)
 scale = Vector2(1.6428572, 1.2159091)
 sprite_frames = SubResource("SpriteFrames_cosi3")
@@ -294,22 +294,22 @@ autoplay = "idle"
 frame = 2
 frame_progress = 1.0
 
-[node name="AttackArea" type="Area2D" parent="."]
+[node name="AttackArea" type="Area2D" parent="." unique_id=337909168]
 position = Vector2(0, -1)
 script = ExtResource("9_m55tn")
 
-[node name="HitShape" type="CollisionShape2D" parent="AttackArea"]
+[node name="HitShape" type="CollisionShape2D" parent="AttackArea" unique_id=1181405218]
 position = Vector2(45, -15)
 shape = SubResource("RectangleShape2D_hit")
 
-[node name="SpecialArea" type="Area2D" parent="."]
+[node name="SpecialArea" type="Area2D" parent="." unique_id=1361004767]
 position = Vector2(0, -1)
 script = ExtResource("9_m55tn")
 
-[node name="HitShape" type="CollisionShape2D" parent="SpecialArea"]
+[node name="HitShape" type="CollisionShape2D" parent="SpecialArea" unique_id=273734471]
 position = Vector2(90, -20)
 shape = SubResource("RectangleShape2D_special")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(3.75, -15.5)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1459402186]
+position = Vector2(3.75, -31.5)
 shape = SubResource("RectangleShape2D_m55tn")

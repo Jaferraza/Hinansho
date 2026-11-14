@@ -3,6 +3,7 @@
 [ext_resource type="VideoStream" uid="uid://cwkxx5e6nu16a" path="res://assets/download.ogv" id="1_esgco"]
 [ext_resource type="Script" path="res://scripts/fight.gd" id="fight_script"]
 [ext_resource type="PackedScene" uid="uid://cysf73s4cqmj8" path="res://scenes/heitachi.tscn" id="player_scene"]
+[ext_resource type="PackedScene" uid="uid://iqqesaeil4c0" path="res://scenes/rogue.tscn" id="player2_scene"]
 [ext_resource type="FontFile" uid="uid://bdpouu4tdtvd5" path="res://Sukajan Brush Demo.otf" id="4_1rqg2"]
 [ext_resource type="Script" uid="uid://brm2kg7ibqv7u" path="res://scripts/3rdmapssb.gd" id="5_22ltf"]
 
@@ -62,6 +63,6 @@ script = ExtResource("5_22ltf")
 position = Vector2(400, 435)
 player_id = 1
 
-[node name="Player2" parent="." instance=ExtResource("player_scene")]
+[node name="Player2" parent="." instance=ExtResource("player2_scene")]
 position = Vector2(750, 435)
 player_id = 2

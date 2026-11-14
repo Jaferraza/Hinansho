@@ -3,6 +3,7 @@
 [ext_resource type="VideoStream" uid="uid://dvujy5l0qtl86" path="res://assets/download-_3_.ogv" id="1_h64oj"]
 [ext_resource type="Script" path="res://scripts/fight.gd" id="fight_script"]
 [ext_resource type="PackedScene" uid="uid://cysf73s4cqmj8" path="res://scenes/heitachi.tscn" id="player_scene"]
+[ext_resource type="PackedScene" uid="uid://iqqesaeil4c0" path="res://scenes/rogue.tscn" id="player2_scene"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h64oj"]
 size = Vector2(24, 285)
@@ -44,6 +45,6 @@ shape = SubResource("RectangleShape2D_ly4kr")
 position = Vector2(200, 212)
 player_id = 1
 
-[node name="Player2" parent="." instance=ExtResource("player_scene")]
+[node name="Player2" parent="." instance=ExtResource("player2_scene")]
 position = Vector2(440, 212)
 player_id = 2

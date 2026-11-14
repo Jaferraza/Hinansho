@@ -3,6 +3,7 @@
 [ext_resource type="VideoStream" uid="uid://c27kuu02fmirg" path="res://assets/Last-Blade-1-Kagami_s-Stage-_1__1.ogv" id="1_8ytog"]
 [ext_resource type="Script" path="res://scripts/fight.gd" id="fight_script"]
 [ext_resource type="PackedScene" uid="uid://cysf73s4cqmj8" path="res://scenes/heitachi.tscn" id="player_scene"]
+[ext_resource type="PackedScene" uid="uid://iqqesaeil4c0" path="res://scenes/rogue.tscn" id="player2_scene"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8ytog"]
 size = Vector2(819, 96)
@@ -17,7 +18,7 @@ size = Vector2(69, 408)
 script = ExtResource("fight_script")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1889409336]
-position = Vector2(479, 284)
+position = Vector2(479, 221)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1141145249]
 position = Vector2(40.5, 157)
@@ -46,9 +47,9 @@ position = Vector2(518, 219)
 zoom = Vector2(1.45, 2.06)
 
 [node name="Player1" parent="." instance=ExtResource("player_scene")]
-position = Vector2(300, 355)
+position = Vector2(300, 290)
 player_id = 1
 
-[node name="Player2" parent="." instance=ExtResource("player_scene")]
-position = Vector2(700, 355)
+[node name="Player2" parent="." instance=ExtResource("player2_scene")]
+position = Vector2(700, 290)
 player_id = 2
