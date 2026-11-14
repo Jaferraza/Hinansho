@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://cptju4ufcfyxp"]
+
+[ext_resource type="VideoStream" uid="uid://cwkxx5e6nu16a" path="res://assets/download.ogv" id="1_esgco"]
+[ext_resource type="FontFile" uid="uid://bdpouu4tdtvd5" path="res://Sukajan Brush Demo.otf" id="4_1rqg2"]
+[ext_resource type="Script" path="res://3rdmapssb.gd" id="5_22ltf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_esgco"]
+size = Vector2(651, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ejrhd"]
+size = Vector2(17, 389)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_crto5"]
+size = Vector2(17, 377)
+
+[node name="3rdmap" type="Node2D" unique_id=1122935667]
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="." unique_id=934653381]
+texture_filter = 1
+offset_left = 257.0
+offset_top = 120.0
+offset_right = 897.0
+offset_bottom = 504.0
+stream = ExtResource("1_esgco")
+speed_scale = 0.8
+autoplay = true
+loop = true
+
+[node name="StaticBody2D" type="StaticBody2D" parent="VideoStreamPlayer" unique_id=787765555]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="VideoStreamPlayer/StaticBody2D" unique_id=999006339]
+position = Vector2(315.5, 368)
+shape = SubResource("RectangleShape2D_esgco")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="VideoStreamPlayer/StaticBody2D" unique_id=1610913499]
+position = Vector2(-1.5, 187.5)
+shape = SubResource("RectangleShape2D_ejrhd")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="VideoStreamPlayer/StaticBody2D" unique_id=1333354148]
+position = Vector2(633.5, 195.5)
+shape = SubResource("RectangleShape2D_crto5")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1715424659]
+position = Vector2(574, 325)
+zoom = Vector2(1.85, 1.8)
+
+[node name="Button" type="Button" parent="." unique_id=741590772]
+texture_filter = 1
+offset_left = 276.0
+offset_top = 155.0
+offset_right = 324.0
+offset_bottom = 188.0
+theme_override_fonts/font = ExtResource("4_1rqg2")
+theme_override_font_sizes/font_size = 20
+text = "Back"
+script = ExtResource("5_22ltf")

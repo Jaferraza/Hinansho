@@ -1,0 +1,10 @@
+Game:
+
+2 players for now
+3 maps skidded
+health bar
+damage/health
+special move
+
+
+progress: 1 map 1 player
